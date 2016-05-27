@@ -1,0 +1,24 @@
+{
+  "name": "bartender",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrSkinny/thinkful-bartender-mvc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrSkinny/thinkful-bartender-mvc/issues"
+  },
+  "homepage": "https://github.com/MrSkinny/thinkful-bartender-mvc#readme"
+}
