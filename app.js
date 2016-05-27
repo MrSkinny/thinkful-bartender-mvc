@@ -150,6 +150,13 @@ View.prototype.templates = function(template){
           <p>Ye fool! I can't make thar drink if ye so picky!</p>
         </div>
       `;
+      
+    case 'restart-button':
+      return `
+        <div>
+          <button class="btn btn-success" id="restart">Make Another Drink</button>
+        </div>
+      `;
   }
 };
 
@@ -161,6 +168,13 @@ View.prototype.render = function(el, template, data) {
 View.prototype.fadeOut = function(el, cb){
   el.fadeOut(cb);
 };
+
+View.prototype.reset = function(){
+  $('.question-area').empty().show();
+  $('.serve-drink').empty();
+  $('.new-action').empty();
+};
+
 /********************
  * END: VIEW CLASS
  ********************/
@@ -201,15 +215,22 @@ Controller.prototype.createDrink = function(pantry){
     this.view.fadeOut($('.question-area'), function(){
       ctrl.view.render($('.serve-drink'), 'serve-drink', {
         ingredients: ctrl.model.preparedDrink
-      });      
+      });
+      ctrl.view.render($('.new-action'), 'restart-button');
     });
 
   } else {
     this.view.fadeOut($('.question-area'), function(){
       ctrl.view.render($('.serve-drink'), 'no-drink');
+      ctrl.view.render($('.new-action'), 'restart-button');
     });
   }
 }
+
+Controller.prototype.restart = function(){
+  this.view.reset();
+  this.init();
+};
  
 /***********************
  * END: CONTROLLER CLASS
@@ -230,6 +251,10 @@ $(function(){
     };
     
     ctrl.submitAnswer(response);
+  });
+  
+  $('#main').on('click', '#restart', function(){
+    ctrl.restart();
   });
 });
 
