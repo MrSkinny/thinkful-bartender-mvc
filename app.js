@@ -76,7 +76,12 @@ Bartender.prototype.nextQuestion = function(){
   } else {
     return false;
   }
-}
+};
+
+Bartender.prototype.createDrink = function(){
+  console.log(this.userPreferences);
+};
+
 /********************
  * END: Bartender Class
  ********************/
@@ -144,6 +149,10 @@ Controller.prototype.submitAnswer = function(response){
     this.createDrink();
   }
 };   
+
+Controller.prototype.createDrink = function(){
+  this.model.createDrink();
+}
  
 /***********************
  * END: CONTROLLER CLASS
