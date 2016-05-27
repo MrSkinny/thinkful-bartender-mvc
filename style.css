@@ -1,0 +1,24 @@
+.user-answer {
+  width: 250px;
+  height: 75px;
+  text-align: center;
+  margin: 50px;
+  padding: 20px 10%;
+  font-size: 18pt;
+}
+
+#user-answer-true {
+  background-color: lightgreen;
+}
+
+#user-answer-true:active {
+  background-color: darkgreen;
+}
+
+#user-answer-false {
+  background-color: lightcoral;
+}
+
+#user-answer-false:active {
+  background-color: red;
+}
