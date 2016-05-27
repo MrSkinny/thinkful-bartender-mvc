@@ -7,18 +7,18 @@
   font-size: 18pt;
 }
 
-#user-answer-true {
+.user-answer.user-answer-true {
   background-color: lightgreen;
 }
 
-#user-answer-true:active {
+.user-answer.user-answer-true:active {
   background-color: darkgreen;
 }
 
-#user-answer-false {
+.user-answer.user-answer-false {
   background-color: lightcoral;
 }
 
-#user-answer-false:active {
+.user-answer.user-answer-false:active {
   background-color: red;
 }
