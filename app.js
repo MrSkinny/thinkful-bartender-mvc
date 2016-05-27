@@ -131,14 +131,17 @@ View.prototype.templates = function(template){
       `;
       
     case 'serve-drink':
-      html += "<div>"
-      html += "  <p>Arrrrr! I'll add...</p>";
-      html += "  <ul>"
+      html += `<div>
+                 <p>Arrrrr! I'll add...</p>
+                 <ul>`;
+
       this.ingredients.forEach(function(ingredient){
         html += "<li>a " + ingredient + "...";
       });
-      html += "  </ul>"
-      html += "<p>DRINK THAR BREW!</p>";
+
+      html += `  </ul>
+                 <p>DRINK THAR BREW!</p>`;
+
       return html;
       
     case 'no-drink':
