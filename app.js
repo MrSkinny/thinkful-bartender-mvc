@@ -109,8 +109,6 @@ function View(){
 }
 
 View.prototype.templates = function(template){
-  var html = '';
-  
   switch(template){
     
     case 'question':
@@ -131,18 +129,19 @@ View.prototype.templates = function(template){
       `;
       
     case 'serve-drink':
-      html += `<div>
-                 <p>Arrrrr! I'll add...</p>
-                 <ul>`;
-
-      this.ingredients.forEach(function(ingredient){
-        html += "<li>a " + ingredient + "...";
-      });
-
-      html += `  </ul>
-                 <p>DRINK THAR BREW!</p>`;
-
-      return html;
+    // ES6 one-line function below! Don't panic!
+    // Same as ingredients.map(function(ingredient) { return '<li>etc</li>' }).join('')
+    // This loops through ingredients, returning array of <li>lines</li>, then .join function joins
+    //   them back into a string to include in the rest of the template.
+      return `
+        <div>
+          <p>Arrrrr! I'll add...</p>
+          <ul>
+            ${this.ingredients.map( (i) => `<li>a ${i}...</li>` ).join('')}
+          </ul>
+          <p>DRINK THAR BREW!</p>
+        </div>
+      `;
       
     case 'no-drink':
       return `
