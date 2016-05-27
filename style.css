@@ -22,3 +22,8 @@
 .user-answer.user-answer-false:active {
   background-color: red;
 }
+
+.serve-drink {
+  font-size: 22pt;
+  color: tomato;
+}

@@ -20,6 +20,14 @@ function Pantry(ingredients){
   this.ingredients = ingredients;
 }
 
+Pantry.prototype.getRandomByTaste = function(taste){
+  var filteredIngredients = this.ingredients.filter(function(ingredient){
+    return ingredient.category === taste;
+  });
+  
+  return filteredIngredients[Math.floor(Math.random() * filteredIngredients.length)];
+};
+
 var myPantry = new Pantry(
   [
     new Ingredient('glug of Rum', 'strong'),
@@ -48,6 +56,7 @@ function Bartender(questions){
   this.questions = questions;
   this.currQ = null;
   this.userPreferences = {};
+  this.preparedDrink = null;
 }
 
 Bartender.prototype.startQuestions = function(){
@@ -78,8 +87,14 @@ Bartender.prototype.nextQuestion = function(){
   }
 };
 
-Bartender.prototype.createDrink = function(){
-  console.log(this.userPreferences);
+Bartender.prototype.createDrink = function(pantry){
+  var prop;
+  this.preparedDrink = [];
+
+  for (prop in this.userPreferences) {
+    if (this.userPreferences[prop]) this.preparedDrink.push(pantry.getRandomByTaste(prop).name);
+  }
+  return this.preparedDrink.length > 0;
 };
 
 /********************
@@ -94,7 +109,10 @@ function View(){
 }
 
 View.prototype.templates = function(template){
+  var html = '';
+  
   switch(template){
+    
     case 'question':
       return `
         <div id="question" data-category="${this.category}">
@@ -111,12 +129,34 @@ View.prototype.templates = function(template){
           </div>
         </div>
       `;
+      
+    case 'serve-drink':
+      html += "<div>"
+      html += "  <p>Arrrrr! I'll add...</p>";
+      html += "  <ul>"
+      this.ingredients.forEach(function(ingredient){
+        html += "<li>a " + ingredient + "...";
+      });
+      html += "  </ul>"
+      html += "<p>DRINK THAR BREW!</p>";
+      return html;
+      
+    case 'no-drink':
+      return `
+        <div>
+          <p>Ye fool! I can't make thar drink if ye so picky!</p>
+        </div>
+      `;
   }
 };
 
 View.prototype.render = function(el, template, data) {
   var html = this.templates.call(data, template)
   el.html(html);
+};
+
+View.prototype.fadeOut = function(el, cb){
+  el.fadeOut(cb);
 };
 /********************
  * END: VIEW CLASS
@@ -146,12 +186,26 @@ Controller.prototype.submitAnswer = function(response){
   if (res){
     this.view.render($('.question-area'), 'question', res);
   } else {
-    this.createDrink();
+    this.createDrink(myPantry);
   }
 };   
 
-Controller.prototype.createDrink = function(){
-  this.model.createDrink();
+Controller.prototype.createDrink = function(pantry){
+  var ctrl = this;
+  
+  if (this.model.createDrink(pantry)) {
+
+    this.view.fadeOut($('.question-area'), function(){
+      ctrl.view.render($('.serve-drink'), 'serve-drink', {
+        ingredients: ctrl.model.preparedDrink
+      });      
+    });
+
+  } else {
+    this.view.fadeOut($('.question-area'), function(){
+      ctrl.view.render($('.serve-drink'), 'no-drink');
+    });
+  }
 }
  
 /***********************
